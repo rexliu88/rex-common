@@ -1,6 +1,6 @@
 package com.github.rexliu88.service;
 
-import com.github.rexliu88.common.FilterData;
+import com.github.rexliu88.easydb.model.FilterData;
 import com.github.rexliu88.common.User;
 import com.github.rexliu88.dto.PageDto;
 import com.github.rexliu88.dto.SourceInfoDto;

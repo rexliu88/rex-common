@@ -1,0 +1,122 @@
+package com.github.rexliu88.easydb.dao;
+
+import com.github.rexliu88.easydb.model.FilterData;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+import java.util.Map;
+
+@Mapper
+public interface ResGetListDao {
+    @Select("<script>"
+            + "SELECT "
+            + "    <foreach collection=\"selectFieldList\" item=\"columnName\" separator=\",\">"
+            + "       ${columnName} "
+            + "    </foreach>"
+            + " FROM ${tableName} "
+            + "<where>"
+            + "    <if test=\"filterDataList != null\">"
+            + "        <foreach collection=\"filterDataList\" item=\"filterData\">"
+            + "            <if test=\"filterData.filterType == 1\">"
+            + "                AND ${filterData.columnName} = #{filterData.columnValue} "
+            + "            </if>"
+            + "            <if test=\"filterData.filterType == 2\">"
+            + "                <choose>"
+            + "                    <when test=\"filterData.columnValueStart != null and filterData.columnValueEnd != null \">"
+            + "                        AND ( ${filterData.columnName} &gt;= #{filterData.columnValueStart} AND ${filterData.columnName} &lt;= #{filterData.columnValueEnd} ) "
+            + "                    </when>"
+            + "                    <otherwise>"
+            + "                        <if test=\"filterData.columnValueStart != null\">"
+            + "                            AND ${filterData.columnName} &gt;= #{filterData.columnValueStart} "
+            + "                        </if>"
+            + "                        <if test=\"filterData.columnValueEnd != null\">"
+            + "                            AND ${filterData.columnName} &lt;= #{filterData.columnValueEnd} "
+            + "                        </if>"
+            + "                    </otherwise>"
+            + "                </choose>"
+            + "            </if>"
+            + "            <if test=\"filterData.filterType == 3\">"
+            + "                <bind name = \"safeColumnValue\" value = \"'%' + filterData.columnValue + '%'\" />"
+            + "                AND ${filterData.columnName} LIKE #{safeColumnValue} "
+            + "            </if>"
+            + "            <if test=\"filterData.filterType == 4\">"
+            + "                AND ${filterData.columnName} IN "
+            + "                <foreach collection=\"filterData.columnValueList\" item=\"columnValue\" separator=\",\" open=\"(\" close=\")\">"
+            + "                    #{columnValue} "
+            + "                </foreach>"
+            + "            </if>"
+            + "            <if test=\"filterData.filterType == 5\">"
+            + "                AND ${filterData.columnName} != #{filterData.columnValue} "
+            + "            </if>"
+            + "        </foreach>"
+            + "    </if>"
+            + "    <if test=\"orFilterDataList != null\">"
+            + "        AND "
+            + "        <foreach collection=\"orFilterDataList\" item=\"filterData\" index=\"index\" open=\"(\" close=\")\">"
+            + "            <if test=\"index != 0\">"
+            + "            OR "
+            + "            </if>"
+            + "            <if test=\"filterData.filterType == 1\">"
+            + "                ${filterData.columnName} = #{filterData.columnValue} "
+            + "            </if>"
+            + "            <if test=\"filterData.filterType == 2\">"
+            + "                <choose>"
+            + "                    <when test=\"filterData.columnValueStart != null and filterData.columnValueEnd != null\">"
+            + "                        ( ${filterData.columnName} &gt;= #{filterData.columnValueStart} AND ${filterData.columnName} &lt;= #{filterData.columnValueEnd} ) "
+            + "                    </when>"
+            + "                    <otherwise>"
+            + "                        <if test=\"filterData.columnValueStart != null\">"
+            + "                            ${filterData.columnName} &gt;= #{filterData.columnValueStart} "
+            + "                        </if>"
+            + "                        <if test=\"filterData.columnValueEnd != null\">"
+            + "                            ${filterData.columnName} &lt;= #{filterData.columnValueEnd} "
+            + "                        </if>"
+            + "                    </otherwise>"
+            + "                </choose>"
+            + "            </if>"
+            + "            <if test=\"filterData.filterType == 3\">"
+            + "                <bind name = \"safeColumnValue\" value = \"'%' + filterData.columnValue + '%'\" />"
+            + "                ${filterData.columnName} LIKE #{safeColumnValue} "
+            + "            </if>"
+            + "            <if test=\"filterData.filterType == 4\">"
+            + "                ${filterData.columnName} IN "
+            + "                <foreach collection=\"filterData.columnValueList\" item=\"columnValue\" separator=\",\" open=\"(\" close=\")\">"
+            + "                    #{columnValue} "
+            + "                </foreach>"
+            + "            </if>"
+            + "            <if test=\"filterData.filterType == 5\">"
+            + "                 ${filterData.columnName} != #{filterData.columnValue} "
+            + "            </if>"
+            + "        </foreach>"
+            + "    </if>"
+            + "    <if test=\"dataPermFilter != null and dataPermFilter != ''\">"
+            + "        AND ${dataPermFilter} "
+            + "    </if>"
+            + "</where>"
+            + "<if test=\"orderBy != null and orderBy != ''\">"
+            + "    ORDER BY ${orderBy}"
+            + "</if>"
+            + "<choose>"
+            + "    <when test=\"pageSize != null and pageSize &gt; 0 and (pageNo == null or pageNo &lt; 1) \">"
+            + "     limit 0,${pageSize}  "
+            + "    </when>"
+            + "    <when test=\"pageSize != null and pageSize &gt; 0 and pageNo != null and pageNo &gt; 0 \">"
+            + "     limit ${(pageNo -1)*pageSize},${pageSize}  "
+            + "    </when>"
+            + "    <otherwise>"
+            + "     limit 0,1000  "
+            + "    </otherwise>"
+            + "</choose>"
+            + "</script>")
+    List<Map<String, Object>> getList(
+            @Param("tableName") String tableName,
+            @Param("selectFieldList") List<String> selectFieldList,
+            @Param("filterDataList") List<FilterData> filterDataList,
+            @Param("orFilterDataList") List<FilterData> orFilterDataList,
+            @Param("dataPermFilter") String dataPermFilter,
+            @Param("orderBy") String orderBy,
+            @Param("pageNo") Integer pageNo,
+            @Param("pageSize") Integer pageSize);
+}

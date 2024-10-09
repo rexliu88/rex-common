@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.github.rexliu88.common.*;
 import com.github.rexliu88.constant.ResDataStatus;
 import com.github.rexliu88.dto.PageDto;
+import com.github.rexliu88.easydb.constant.FieldFilterType;
+import com.github.rexliu88.easydb.model.FilterData;
+import com.github.rexliu88.easydb.model.TableData;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
