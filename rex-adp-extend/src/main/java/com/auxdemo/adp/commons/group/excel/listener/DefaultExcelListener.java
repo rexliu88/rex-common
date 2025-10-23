@@ -72,6 +72,9 @@ public class DefaultExcelListener<T> extends AnalysisEventListener<T> implements
 
     @Override
     public void invoke(T data, AnalysisContext context) {
+        if (log.isDebugEnabled()) {
+            log.debug("解析到一行数据: {}", JSON.toJSONString(data));
+        }
         if (this.isValidate) {
             AuxValidatorUtil.validate(data);
         }
