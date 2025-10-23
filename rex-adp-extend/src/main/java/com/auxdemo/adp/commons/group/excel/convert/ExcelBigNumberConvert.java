@@ -1,3 +1,4 @@
+
 package com.auxdemo.adp.commons.group.excel.convert;
 
 import cn.hutool.core.convert.Convert;
@@ -8,36 +9,42 @@ import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.data.ReadCellData;
 import com.alibaba.excel.metadata.data.WriteCellData;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import java.math.BigDecimal;
 
+@Slf4j
 public class ExcelBigNumberConvert implements Converter<Long> {
-    private static final Logger log = LoggerFactory.getLogger(ExcelBigNumberConvert.class);
+
     @Override
     public Class<Long> supportJavaTypeKey() {
         return Long.class;
     }
+
     @Override
     public CellDataTypeEnum supportExcelTypeKey() {
         return CellDataTypeEnum.STRING;
     }
+
     @Override
     public Long convertToJavaData(ReadCellData<?> cellData, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
         return Convert.toLong(cellData.getData());
     }
+
     @Override
-    public WriteCellData<Object> convertToExcelData(Long object, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
-        if (ObjectUtil.isNotNull(object)) {
-            String str = Convert.toStr(object);
-            if (str.length() > 15) {
-                return new WriteCellData(str);
-            }
+    public WriteCellData<?> convertToExcelData(Long object, ExcelContentProperty contentProperty, GlobalConfiguration globalConfiguration) {
+        if (ObjectUtil.isNull(object)) {
+            return new WriteCellData<>((BigDecimal) null);
         }
 
-        WriteCellData<Object> cellData = new WriteCellData(new BigDecimal(object));
+        String str = Convert.toStr(object);
+        if (str.length() > 15) {
+            return new WriteCellData<>(str);
+        }
+
+        // 使用 valueOf 避免 double 精度损失
+        WriteCellData<BigDecimal> cellData = new WriteCellData<>(BigDecimal.valueOf(object));
         cellData.setType(CellDataTypeEnum.NUMBER);
         return cellData;
     }
 }
-

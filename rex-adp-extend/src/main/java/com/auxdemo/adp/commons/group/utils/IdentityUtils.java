@@ -1,185 +1,191 @@
 package com.auxdemo.adp.commons.group.utils;
 
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.servlet.ServletUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 
 import com.auxdemo.adp.commons.group.constant.FeignConstants;
 
 public class IdentityUtils {
-    public static Long getUserId(){
+    private static HttpServletRequest getHttpServletRequest() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes != null ? attributes.getRequest() : null;
+        return request;
+    }
+
+    private static String getHeaderValue(String headerKey) {
+        HttpServletRequest request = getHttpServletRequest();
+        if (request == null) {
+            return null;
+        }
+        String value = ServletUtil.getHeader(request, FeignConstants.USER_ID_KEY, StandardCharsets.UTF_8.toString());
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+        return value;
+    }
+
+    public static Long getUserId() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.USER_ID_KEY);
-            return value==null?null:Long.valueOf(value);
+            String value = getHeaderValue(FeignConstants.USER_ID_KEY);
+            return Convert.toLong(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getCompanyCode(){
+
+    public static String getCompanyCode() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.COMPANY_CODE_KEY);
+            String value = getHeaderValue(FeignConstants.COMPANY_CODE_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getUserName(){
+
+    public static String getUserName() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.USERNAME_KEY);
+            String value = getHeaderValue(FeignConstants.USERNAME_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getNickName(){
+
+    public static String getNickName() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.NICKNAME_KEY);
+            String value = getHeaderValue(FeignConstants.NICKNAME_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getMobile(){
+
+    public static String getMobile() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.USER_MOBILE_KEY);
+            String value = getHeaderValue(FeignConstants.USER_MOBILE_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getOaUsername(){
+
+    public static String getOaUsername() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.OA_USERNAME_KEY);
+            String value = getHeaderValue(FeignConstants.OA_USERNAME_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getBadgeNo(){
+
+    public static String getBadgeNo() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.BADGE_NO_KEY);
+            String value = getHeaderValue(FeignConstants.BADGE_NO_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getLoginFrom(){
+
+    public static String getLoginFrom() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.LOGIN_FROM_KEY);
+            String value = getHeaderValue(FeignConstants.LOGIN_FROM_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static Boolean getIsAdmin(){
+
+    public static Boolean getIsAdmin() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.USER_IS_ADMIN_KEY);
-            return value==null?Boolean.FALSE:Boolean.valueOf(value);
+            String value = getHeaderValue(FeignConstants.USER_IS_ADMIN_KEY);
+            return value == null ? Boolean.FALSE : Boolean.valueOf(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getGatewayClientId(){
+
+    public static String getGatewayClientId() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.GATEWAY_CLIENT_ID_KEY);
+            String value = getHeaderValue(FeignConstants.GATEWAY_CLIENT_ID_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getLoginAppCode(){
+
+    public static String getLoginAppCode() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.LOGIN_APP_CODE_KEY);
+            String value = getHeaderValue(FeignConstants.LOGIN_APP_CODE_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
-    public static String getBrowserLanguage(){
+
+    public static String getBrowserLanguage() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.BROWSER_LANGUAGE);
+            String value = getHeaderValue(FeignConstants.BROWSER_LANGUAGE);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
+
     public static String getBrowserLanguageNew() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
+            HttpServletRequest request = getHttpServletRequest();
             // 优先取请求头中的值
-            String value = request.getHeader("Browser-Language");
+            String value = getHeaderValue("Browser-Language");
             if (StrUtil.isNotBlank(value)) {
                 return decode(value);
             }
             // 遍历请求头中的所有值，忽略大小写，找到最后一个匹配得的值
             Enumeration<String> headers = request.getHeaderNames();
             if (headers != null) {
-                while(headers.hasMoreElements()) {
-                    String headerKey = (String)headers.nextElement();
+                while (headers.hasMoreElements()) {
+                    String headerKey = (String) headers.nextElement();
                     if (StrUtil.equalsIgnoreCase(headerKey, "browser-language")) {
                         value = request.getHeader(headerKey);
                     }
                 }
             }
-
-            return decode(value);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    public static Boolean getIsLoginUnion(){
-        try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.LOGIN_APP_IS_UNION_KEY);
-            return value==null?Boolean.FALSE:Boolean.valueOf(value);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    public static String getRouterKey(){
-        try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            HttpServletRequest request = attributes.getRequest();
-            String value = request.getHeader(FeignConstants.ROUTER_KEY);
             return decode(value);
         } catch (Exception e) {
             return null;
         }
     }
 
-    private static String decode(String str){
-        return decode(str,"UTF-8");
+    public static Boolean getIsLoginUnion() {
+        try {
+            String value = getHeaderValue(FeignConstants.LOGIN_APP_IS_UNION_KEY);
+            return value == null ? Boolean.FALSE : Boolean.valueOf(value);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String getRouterKey() {
+        try {
+            String value = getHeaderValue(FeignConstants.ROUTER_KEY);
+            return decode(value);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static String decode(String str) {
+        return decode(str, StandardCharsets.UTF_8.toString());
     }
 
     private static String decode(String str, String enc) {
@@ -189,6 +195,7 @@ public class IdentityUtils {
         try {
             return URLDecoder.decode(str, enc);
         } catch (UnsupportedEncodingException e) {
+            // 可以考虑记录日志
             return str;
         }
     }
