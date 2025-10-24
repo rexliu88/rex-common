@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 匹配状态
- * 0未匹配;1自动匹配成功;2自动匹配失败;3人工匹配
- *
- * 匹配状态:-1 匹配失败\关系解绑 0未匹配;1 匹配成功; 2手动匹配
+ * 匹配状态:
+ * -1 匹配失败\关系解绑
+ * 0 未匹配;
+ * 1 自动匹配成功;
+ * 2 自动匹配失败; 需人工手动匹配    中间
+ * 3 人工手动匹配
  */
 @Slf4j
 public final class MatchedStatus {

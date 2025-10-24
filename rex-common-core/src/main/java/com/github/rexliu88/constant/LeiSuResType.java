@@ -1,5 +1,8 @@
 package com.github.rexliu88.constant;
 
+/**
+ * 雷速 - 资源类型枚举
+ */
 public enum LeiSuResType {
     job("调度"),
     category("分类"),

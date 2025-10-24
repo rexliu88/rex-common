@@ -24,7 +24,7 @@ public class TableData {
     /**
      * 表表名
      */
-    String tableName;
+    public String tableName;
     /**
      * 表字段数据对象列表
      */

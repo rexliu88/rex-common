@@ -5,6 +5,9 @@ import lombok.experimental.Accessors;
 
 /**
  * 字段值Dto
+ *
+ * id 字段值
+ * name 字段名称
  */
 @Data
 @Accessors(chain = true)

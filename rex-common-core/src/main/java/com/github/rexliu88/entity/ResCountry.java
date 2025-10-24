@@ -122,7 +122,7 @@ public class ResCountry implements ResEntity,Serializable {
     private Integer sourceId;
 
     /**
-     * 数据状态
+     * 数据状态 0 抓取完成 1 转换完成 2 匹配完成 3 写入主库完成
      */
     @TableField("data_status")
     private Integer dataStatus;

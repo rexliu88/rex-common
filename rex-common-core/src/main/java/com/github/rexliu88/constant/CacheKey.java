@@ -1,5 +1,8 @@
 package com.github.rexliu88.constant;
 
+/**
+ * 缓存key枚举
+ */
 public enum CacheKey {
     name("名称"),
     relationId("关系id"),
@@ -7,6 +10,7 @@ public enum CacheKey {
     parentCacheType("父类型"),
     categoryId("分类id"),
     categoryName("分类名称"),
+
     categoryContinent("分类大洲"),
     competitionId("赛事"),
     competitionName("赛事名称"),

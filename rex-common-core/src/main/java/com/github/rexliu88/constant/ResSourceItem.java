@@ -8,6 +8,9 @@ import java.util.Map;
 
 /**
  * 数据源对应主库的项目类型
+ *
+ * 1：雷速足球
+ * 2：雷速篮球
  */
 @Slf4j
 @NoArgsConstructor

@@ -7,6 +7,11 @@ import java.util.Map;
 
 /**
  * 资源数据状态
+ *
+ * 0 抓取完成;
+ * 1 转换完成;
+ * 2 匹配完成;
+ * 3 写入主库完成
  */
 @Slf4j
 public class ResDataStatus {

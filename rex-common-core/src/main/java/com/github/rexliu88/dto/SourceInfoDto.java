@@ -8,6 +8,12 @@ import java.io.Serializable;
 
 /**
  * 来源Dto
+ *
+ * 来源id
+ * 来源名称
+ *
+ * 来源项目id
+ * 来源项目名称
  */
 @Data
 @NoArgsConstructor

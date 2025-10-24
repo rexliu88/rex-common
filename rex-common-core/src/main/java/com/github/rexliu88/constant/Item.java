@@ -3,7 +3,8 @@ package com.github.rexliu88.constant;
 import java.util.Arrays;
 
 /**
- * 赛事项目
+ * 赛事项目 枚举
+ * 足球、篮球、格斗、其他 等项目
  */
 public enum Item {
 

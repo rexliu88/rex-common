@@ -13,6 +13,13 @@ import java.util.Objects;
 public interface IEntity {
     /**
      * 实体固定字段
+     *
+     *  实体固定字段
+     *  创建时间、创建人
+     *  修改时间、修改人
+     *  逻辑删除字段
+     *
+     *
      */
     public static final String createTime = "create_time";
     public static final String createBy = "create_by";

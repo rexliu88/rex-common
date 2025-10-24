@@ -2,6 +2,8 @@ package com.github.rexliu88.constant;
 
 /**
  * 比赛结果类型
+ *
+ * 比赛结果类型，对应数据源的res_match_results表
  */
 public enum MatchResultsType {
 

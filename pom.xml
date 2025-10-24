@@ -16,13 +16,13 @@
         <spring.version>5.3.19</spring.version>
         <spring-boot.version>2.6.7</spring-boot.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
-        <hutool.version>5.8.23</hutool.version>
+        <hutool.version>5.8.41</hutool.version>
         <guava.version>33.3.1-jre</guava.version>
-        <mybatis-plus.version>3.5.3</mybatis-plus.version>
-        <fastjson2.version>2.0.22</fastjson2.version>
+        <mybatis-plus.version>3.5.4</mybatis-plus.version>
+        <fastjson2.version>2.0.59</fastjson2.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <easyexcel.version>3.2.1</easyexcel.version>
-        <MapStruct.version>1.6.2</MapStruct.version>
+        <easyexcel.version>4.0.3</easyexcel.version>
+        <MapStruct.version>1.6.3</MapStruct.version>
     </properties>
 
     <modules>

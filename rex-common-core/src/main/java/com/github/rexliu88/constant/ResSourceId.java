@@ -1,10 +1,10 @@
 package com.github.rexliu88.constant;
 
 import com.github.rexliu88.dto.DictItemDto;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.util.Lists;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
@@ -12,6 +12,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 资源数据源
+ * 0 未知数据源
+ * 1 雷速足球
+ * 2 雷速篮球
+ * 3 夸克足球
+ * 4 夸克篮球
+ *
+ * 100 自身数据
+ */
 @Slf4j
 public class ResSourceId {
     /**

@@ -1,7 +1,7 @@
 package com.github.rexliu88.reflect.container;
 
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

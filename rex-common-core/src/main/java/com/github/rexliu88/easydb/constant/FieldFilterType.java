@@ -5,6 +5,13 @@ import java.util.Map;
 
 /**
  * 字段过滤类型常量字典对象
+ *
+ * 0 无过滤
+ * 1 等于过滤
+ * 2 范围过滤
+ * 3 模糊过滤
+ * 4 IN LIST列表过滤
+ * 5 不等于过滤
  */
 public final class FieldFilterType {
 

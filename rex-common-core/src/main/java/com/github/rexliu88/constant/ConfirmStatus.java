@@ -7,7 +7,9 @@ import java.util.Map;
 
 /**
  * 确认状态
- * 0未确认;1已确认
+ * -1  未匹配上
+ *  0  未确认
+ *  1  已确认
  */
 @Slf4j
 public final class ConfirmStatus {

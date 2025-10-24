@@ -2,6 +2,7 @@ package com.github.rexliu88.easydb.model;
 
 import com.github.rexliu88.easydb.constant.FieldFilterType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.Set;
 /**
  * 过滤字段数据
  */
+@EqualsAndHashCode
 @Data
 @NoArgsConstructor
 public class FilterData {
@@ -42,28 +44,51 @@ public class FilterData {
      */
     private Integer filterType = FieldFilterType.EQUAL_FILTER;
 
-    public FilterData(String columnName,Object columnValue){
-        this.filterType = FieldFilterType.EQUAL_FILTER;
-        this.columnName = columnName;
-        this.columnValue = columnValue;
+    // 增加非空校验
+    public FilterData(String columnName, Object columnValue) {
+        this(columnName, columnValue, FieldFilterType.EQUAL_FILTER);
     }
 
-    public FilterData(String columnName,Object columnValue, int fieldFilterType){
+    /**
+     * 需要 将 fieldFilterType 转为枚举类型,这样 就不会重载调用异常了。
+     * @param columnName
+     * @param columnValue
+     * @param fieldFilterType
+     */
+    public FilterData(String columnName, Object columnValue, int fieldFilterType) {
+        validateColumnName(columnName);
+        validateColumnValue(columnValue);
         this.filterType = fieldFilterType;
         this.columnName = columnName;
         this.columnValue = columnValue;
     }
 
-    public FilterData(String columnName, int fieldFilterType, Object columnValueStart, Object columnValueEnd){
+    public FilterData(String columnName, Object columnValueStart, Object columnValueEnd) {
+        validateColumnName(columnName);
+        validateColumnValue(columnValueStart);
+        validateColumnValue(columnValueEnd);
         this.filterType = FieldFilterType.RANGE_FILTER;
         this.columnName = columnName;
         this.columnValueStart = columnValueStart;
         this.columnValueEnd = columnValueEnd;
     }
 
-    public FilterData(String columnName, int fieldFilterType, Set<String> columnValueList){
+    public FilterData(String columnName, Set<String> columnValueList) {
+        validateColumnName(columnName);
         this.filterType = FieldFilterType.IN_LIST_FILTER;
         this.columnName = columnName;
         this.columnValueList = columnValueList;
+    }
+
+    private void validateColumnName(String columnName) {
+        if (columnName == null || columnName.isEmpty()) {
+            throw new IllegalArgumentException("Column name must not be null or empty.");
+        }
+    }
+
+    private void validateColumnValue(Object columnValue) {
+        if (columnValue == null) {
+            throw new IllegalArgumentException("Column value cannot be null");
+        }
     }
 }
